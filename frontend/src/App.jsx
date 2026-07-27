@@ -15,6 +15,9 @@ import Pricing from "./pages/Pricing.jsx";
 import Business from "./pages/Business.jsx";
 import HowItWorks from "./pages/HowItWorks.jsx";
 import Roadmap from "./pages/Roadmap.jsx";
+import Personal from "./pages/Personal.jsx";
+import About from "./pages/About.jsx";
+import Help from "./pages/Help.jsx";
 
 // Auth Pages
 import Login from "./pages/Login.jsx";
@@ -89,10 +92,13 @@ function AppRoutes() {
           MARKETING PAGES (Dark Theme with PublicShell)
           Uses unified Navy + Gold theme tokens
          ======================================== */}
-      <Route path="/" element={<Landing />} />
+      <Route path="/" element={<PublicShell><Landing /></PublicShell>} />
       <Route path="/pricing" element={<PublicShell><Pricing /></PublicShell>} />
       <Route path="/business" element={<PublicShell><Business /></PublicShell>} />
       <Route path="/how-it-works" element={<PublicShell><HowItWorks /></PublicShell>} />
+      <Route path="/personal" element={<PublicShell><Personal /></PublicShell>} />
+      <Route path="/about" element={<PublicShell><About /></PublicShell>} />
+      <Route path="/help" element={<PublicShell><Help /></PublicShell>} />
       <Route path="/roadmap" element={<PublicShell><Roadmap /></PublicShell>} />
 
       {/* ========================================
