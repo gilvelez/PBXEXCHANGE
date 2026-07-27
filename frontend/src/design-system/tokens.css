@@ -1,0 +1,114 @@
+:root {
+  --pbx-navy-950: #03112b;
+  --pbx-navy-900: #061a3a;
+  --pbx-navy-850: #0b2248;
+  --pbx-navy-800: #102b57;
+  --pbx-navy-700: #173967;
+
+  --pbx-gold-500: #d6b14a;
+  --pbx-gold-400: #e0c16a;
+  --pbx-gold-300: #ead58f;
+  --pbx-gold-muted: #b7953f;
+
+  --pbx-ivory-50: #f7f4ed;
+  --pbx-ivory-100: #f1ede4;
+  --pbx-white: #ffffff;
+
+  --pbx-slate-100: #dbe2ed;
+  --pbx-slate-300: #a9b5c8;
+  --pbx-slate-400: #8e9db5;
+  --pbx-slate-600: #53647e;
+
+  --pbx-success: #2f9e75;
+  --pbx-warning: #d69b38;
+  --pbx-danger: #c65a62;
+  --pbx-info: #4c83c3;
+
+  --pbx-border-dark: rgba(255, 255, 255, 0.10);
+  --pbx-border-light: rgba(3, 17, 43, 0.12);
+
+  --pbx-bg-app: var(--pbx-navy-950);
+  --pbx-bg-shell: var(--pbx-navy-900);
+  --pbx-bg-surface: var(--pbx-ivory-50);
+  --pbx-bg-surface-elevated: var(--pbx-white);
+  --pbx-text-primary: var(--pbx-ivory-50);
+  --pbx-text-secondary: var(--pbx-slate-300);
+  --pbx-text-muted: var(--pbx-slate-400);
+  --pbx-text-strong: var(--pbx-navy-950);
+  --pbx-text-subtle: var(--pbx-slate-600);
+  --pbx-text-accent: var(--pbx-gold-400);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  --shadow-sm: 0 1px 2px rgba(3, 17, 43, 0.08);
+  --shadow-md: 0 14px 34px rgba(3, 17, 43, 0.14);
+  --shadow-dark: 0 20px 50px rgba(0, 0, 0, 0.22);
+}
+
+.bg-app {
+  background: var(--pbx-bg-app);
+}
+
+.bg-shell {
+  background: var(--pbx-bg-shell);
+}
+
+.bg-surface {
+  background: var(--pbx-bg-surface);
+}
+
+.bg-surface-elevated {
+  background: var(--pbx-bg-surface-elevated);
+}
+
+.text-primary {
+  color: var(--pbx-text-primary);
+}
+
+.text-secondary {
+  color: var(--pbx-text-secondary);
+}
+
+.text-accent {
+  color: var(--pbx-text-accent);
+}
+
+.border-subtle {
+  border-color: var(--pbx-border-dark);
+}
+
+.border-subtle-light {
+  border-color: var(--pbx-border-light);
+}
+
+.status-success {
+  color: var(--pbx-success);
+}
+
+.status-warning {
+  color: var(--pbx-warning);
+}
+
+.status-danger {
+  color: var(--pbx-danger);
+}
+
+.status-info {
+  color: var(--pbx-info);
+}
+
+.font-financial {
+  font-variant-numeric: tabular-nums;
+}
+
+.font-display {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.font-sans-pbx {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+

@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useSession } from "../contexts/SessionContext";
-import { colors, tw } from "../lib/theme";
+import BrandLogo from "../design-system/components/BrandLogo.jsx";
 
 // Navigation items for recipient dashboard
 const navItems = [
@@ -78,15 +78,15 @@ export default function RecipientShell() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F8FB] flex flex-col">
+    <div className="min-h-screen bg-[#F7F4ED] flex flex-col">
       {/* Top Header */}
-      <header className="bg-[#0B1F3B] border-b border-[#C9A24D]/20 sticky top-0 z-50">
+      <header className="bg-[#03112B] border-b border-[#D6B14A]/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Mobile menu button */}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 text-white/70 hover:text-[#C9A24D]"
+              className="lg:hidden p-2 text-white/70 hover:text-[#D6B14A]"
               data-testid="mobile-menu-btn"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,10 +95,8 @@ export default function RecipientShell() {
             </button>
             
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-[#C9A24D]/20 border border-[#C9A24D]/40 flex items-center justify-center">
-                <span className="text-[#C9A24D] font-bold text-xs">PBX</span>
-              </div>
-              <span className="text-[#C9A24D] font-semibold hidden sm:block">Recipient</span>
+              <BrandLogo variant="light" lockup="mark" markClassName="h-8 w-8" />
+              <span className="text-[#D6B14A] font-semibold hidden sm:block">Recipient</span>
             </div>
           </div>
           
@@ -108,7 +106,7 @@ export default function RecipientShell() {
             </span>
             <button
               onClick={handleLogout}
-              className="text-sm text-white/70 hover:text-[#C9A24D] transition"
+              className="text-sm text-white/70 hover:text-[#D6B14A] transition"
               data-testid="recipient-logout-btn"
             >
               Sign out
@@ -119,7 +117,7 @@ export default function RecipientShell() {
 
       <div className="flex flex-1">
         {/* Sidebar - Desktop */}
-        <aside className="hidden lg:flex flex-col w-60 bg-[#0B1F3B] border-r border-[#C9A24D]/20">
+        <aside className="hidden lg:flex flex-col w-60 bg-[#03112B] border-r border-[#D6B14A]/20">
           <nav className="flex-1 p-4">
             <ul className="space-y-1">
               {navItems.map(({ to, label, icon }) => (
@@ -129,7 +127,7 @@ export default function RecipientShell() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive 
-                          ? "bg-[#C9A24D]/20 text-[#C9A24D]" 
+                          ? "bg-[#D6B14A]/20 text-[#D6B14A]" 
                           : "text-white/70 hover:bg-white/5 hover:text-white"
                       }`
                     }
@@ -144,10 +142,10 @@ export default function RecipientShell() {
           </nav>
           
           {/* Sidebar footer */}
-          <div className="p-4 border-t border-[#C9A24D]/20">
+          <div className="p-4 border-t border-[#D6B14A]/20">
             <NavLink
               to="/"
-              className="flex items-center gap-2 text-sm text-white/50 hover:text-[#C9A24D] transition"
+              className="flex items-center gap-2 text-sm text-white/50 hover:text-[#D6B14A] transition"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -166,7 +164,7 @@ export default function RecipientShell() {
         )}
 
         {/* Mobile Sidebar */}
-        <aside className={`lg:hidden fixed top-14 left-0 bottom-0 w-64 bg-[#0B1F3B] border-r border-[#C9A24D]/20 z-50 transform transition-transform ${
+        <aside className={`lg:hidden fixed top-14 left-0 bottom-0 w-64 bg-[#03112B] border-r border-[#D6B14A]/20 z-50 transform transition-transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <nav className="p-4">
@@ -179,7 +177,7 @@ export default function RecipientShell() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive 
-                          ? "bg-[#C9A24D]/20 text-[#C9A24D]" 
+                          ? "bg-[#D6B14A]/20 text-[#D6B14A]" 
                           : "text-white/70 hover:bg-white/5 hover:text-white"
                       }`
                     }
@@ -209,7 +207,7 @@ export default function RecipientShell() {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0B1F3B] border-t border-[#C9A24D]/20 z-40">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#03112B] border-t border-[#D6B14A]/20 z-40">
         <div className="flex justify-around py-2">
           {navItems.slice(0, 5).map(({ to, label, icon }) => (
             <NavLink
@@ -217,7 +215,7 @@ export default function RecipientShell() {
               to={to}
               className={({ isActive }) =>
                 `flex flex-col items-center py-1 px-2 ${
-                  isActive ? "text-[#C9A24D]" : "text-white/60"
+                  isActive ? "text-[#D6B14A]" : "text-white/60"
                 }`
               }
             >
@@ -227,7 +225,7 @@ export default function RecipientShell() {
           ))}
         </div>
         {/* Safe area for iOS */}
-        <div className="h-safe-area-inset-bottom bg-[#0B1F3B]" />
+        <div className="h-safe-area-inset-bottom bg-[#03112B]" />
       </nav>
     </div>
   );

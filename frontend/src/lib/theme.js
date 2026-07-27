@@ -1,6 +1,6 @@
 /**
- * PBX Design System - Single Source of Truth
- * Navy + Gold unified theme across all pages
+ * PBX Exchange Design System - Single Source of Truth
+ * Deep navy, muted gold, ivory, and slate across all pages.
  * 
  * USAGE: Import tokens directly, no inline hardcoded colors allowed
  * import { colors, spacing, ... } from '../lib/theme';
@@ -9,79 +9,80 @@
 // === COLOR TOKENS ===
 export const colors = {
   // Primary - PBX Navy
-  navy: '#0A2540',
-  navyDark: '#061C33',
-  navyLight: '#1A3A5C',
+  navy: '#03112B',
+  navyDark: '#061A3A',
+  navyLight: '#102B57',
+  navy700: '#173967',
   
   // Accent - Gold
-  gold: '#F6C94B',
-  goldDark: '#D4A520',
-  goldLight: '#FFEEB3',
+  gold: '#D6B14A',
+  goldDark: '#B7953F',
+  goldLight: '#EAD58F',
   
   // Backgrounds
-  shell: '#0A2540',           // Main app shell background
-  card: '#FFFFFF',            // Card backgrounds (light for readability)
-  cardDark: '#F8F9FA',        // Slightly darker card variant
+  shell: '#03112B',           // Main app shell background
+  card: '#F7F4ED',            // Ivory surfaces
+  cardDark: '#F1EDE4',        // Slightly darker surface variant
   input: '#FFFFFF',           // Input field backgrounds
   
   // Text on dark backgrounds (shell)
-  textPrimary: '#FFFFFF',
-  textSecondary: 'rgba(255,255,255,0.7)',
-  textMuted: 'rgba(255,255,255,0.5)',
+  textPrimary: '#F7F4ED',
+  textSecondary: '#A9B5C8',
+  textMuted: '#8E9DB5',
   
   // Text on light backgrounds (cards)
-  textDark: '#1A1A1A',
-  textDarkSecondary: '#6B7280',
+  textDark: '#03112B',
+  textDarkSecondary: '#53647E',
   
   // Borders
-  borderLight: 'rgba(255,255,255,0.15)',
-  borderCard: '#E5E7EB',
+  borderLight: 'rgba(255,255,255,0.10)',
+  borderCard: 'rgba(3,17,43,0.12)',
   
   // Status colors
-  success: '#10B981',
-  warning: '#F59E0B',
-  error: '#EF4444',
-  info: '#3B82F6',
+  success: '#2F9E75',
+  warning: '#D69B38',
+  error: '#C65A62',
+  info: '#4C83C3',
   
   // CTA (Call to Action)
-  ctaPrimary: '#F6C94B',        // Gold button
-  ctaSecondary: '#EF4444',      // Red button (marketing CTAs)
+  ctaPrimary: '#D6B14A',        // Muted gold button
+  ctaSecondary: '#102B57',      // Navy button
 };
 
 // === TAILWIND CLASS MAPPINGS ===
 // Use these for consistent styling across components
 export const tw = {
   // Shell & backgrounds
-  shellBg: 'bg-gradient-to-b from-[#0A2540] to-[#061C33]',
-  shellBgSolid: 'bg-[#0A2540]',
-  cardBg: 'bg-white',
-  cardBgDark: 'bg-[#F8F9FA]',
+  shellBg: 'bg-gradient-to-b from-[#03112B] to-[#061A3A]',
+  shellBgSolid: 'bg-[#03112B]',
+  cardBg: 'bg-[#F7F4ED]',
+  cardBgDark: 'bg-[#F1EDE4]',
   
   // Text
-  textOnDark: 'text-white',
-  textOnDarkMuted: 'text-white/70',
-  textOnDarkFaint: 'text-white/50',
-  textOnLight: 'text-[#1A1A1A]',
-  textOnLightMuted: 'text-gray-500',
+  textOnDark: 'text-[#F7F4ED]',
+  textOnDarkMuted: 'text-[#A9B5C8]',
+  textOnDarkFaint: 'text-[#8E9DB5]',
+  textOnLight: 'text-[#03112B]',
+  textOnLightMuted: 'text-[#53647E]',
   
   // Accent
-  textGold: 'text-[#F6C94B]',
-  bgGold: 'bg-[#F6C94B]',
+  textGold: 'text-[#D6B14A]',
+  bgGold: 'bg-[#D6B14A]',
   
   // Borders
   borderOnDark: 'border-white/15',
   borderOnLight: 'border-gray-200',
   
   // Buttons - Primary (Gold)
-  btnPrimary: 'bg-[#F6C94B] text-[#0A2540] font-bold hover:bg-[#D4A520]',
-  btnPrimaryDisabled: 'bg-[#F6C94B]/50 text-[#0A2540]/50 cursor-not-allowed',
+  btnPrimary: 'bg-[#D6B14A] text-[#03112B] font-bold hover:bg-[#E0C16A]',
+  btnPrimaryDisabled: 'bg-[#D6B14A]/50 text-[#03112B]/50 cursor-not-allowed',
   
   // Buttons - Navy (for light backgrounds)
-  btnNavy: 'bg-[#0A2540] text-white font-semibold hover:bg-[#061C33]',
-  btnNavyDisabled: 'bg-[#0A2540]/50 text-white/50 cursor-not-allowed',
+  btnNavy: 'bg-[#03112B] text-[#F7F4ED] font-semibold hover:bg-[#061A3A]',
+  btnNavyDisabled: 'bg-[#03112B]/50 text-white/50 cursor-not-allowed',
   
-  // Buttons - Red CTA (marketing)
-  btnCta: 'bg-red-600 text-white font-bold hover:bg-red-700',
+  // Buttons - Secondary CTA
+  btnCta: 'bg-[#102B57] text-[#F7F4ED] font-bold hover:bg-[#173967]',
   
   // Buttons - Secondary (outlined)
   btnSecondary: 'bg-transparent border border-white/20 text-white hover:bg-white/10',
@@ -92,7 +93,7 @@ export const spacing = {
   radiusSm: '8px',
   radiusMd: '12px',
   radiusLg: '16px',
-  radiusXl: '24px',
+  radiusXl: '22px',
   radiusFull: '9999px',
 };
 
@@ -121,6 +122,9 @@ export function injectThemeVariables() {
   root.style.setProperty('--pbx-navy', colors.navy);
   root.style.setProperty('--pbx-navy-dark', colors.navyDark);
   root.style.setProperty('--pbx-navy-light', colors.navyLight);
+  root.style.setProperty('--pbx-navy-950', colors.navy);
+  root.style.setProperty('--pbx-navy-900', colors.navyDark);
+  root.style.setProperty('--pbx-navy-800', colors.navyLight);
   root.style.setProperty('--pbx-gold', colors.gold);
   root.style.setProperty('--pbx-gold-dark', colors.goldDark);
   root.style.setProperty('--pbx-gold-light', colors.goldLight);

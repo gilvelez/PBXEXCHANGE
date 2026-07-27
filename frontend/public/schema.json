@@ -1,8 +1,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Philippine Bayani Exchange",
+  "name": "PBX Exchange",
   "url": "https://pbx-social.preview.emergentagent.com/",
-  "logo": "https://pbx-social.preview.emergentagent.com/favicon.png",
-  "description": "Fast, secure USD→PHP remittances built for OFWs and their families."
+  "logo": "https://pbx-social.preview.emergentagent.com/favicon.svg",
+  "description": "Social payments and cross-border wallets for Filipinos everywhere."
 }

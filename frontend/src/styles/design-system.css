@@ -1,53 +1,51 @@
-/* PBX Unified Design System
- * ONE theme across all pages: Navy + Gold
- * Cards can be off-white, shell is consistent
+@import "../design-system/tokens.css";
+
+/* PBX Exchange Unified Design System
+ * One premium theme across public, sender, recipient, and business surfaces.
  */
 
 :root {
-  /* Primary - PBX Navy */
-  --pbx-navy: #0A2540;
-  --pbx-navy-dark: #061C33;
-  --pbx-navy-light: #1A3A5C;
+  /* Backwards-compatible aliases for legacy components */
+  --pbx-navy: var(--pbx-navy-950);
+  --pbx-navy-dark: var(--pbx-navy-900);
+  --pbx-navy-light: var(--pbx-navy-800);
   
   /* Accent - Gold */
-  --pbx-gold: #F6C94B;
-  --pbx-gold-dark: #D4A520;
-  --pbx-gold-light: #FFEEB3;
+  --pbx-gold: var(--pbx-gold-500);
+  --pbx-gold-dark: var(--pbx-gold-muted);
+  --pbx-gold-light: var(--pbx-gold-300);
   
   /* Backgrounds - Unified */
-  --pbx-bg-shell: #0A2540;
-  --pbx-bg-card: #FFFFFF;
-  --pbx-bg-card-dark: #F8F9FA;
-  --pbx-bg-input: #FFFFFF;
+  --pbx-bg-shell: var(--pbx-navy-950);
+  --pbx-bg-card: var(--pbx-ivory-50);
+  --pbx-bg-card-dark: var(--pbx-ivory-100);
+  --pbx-bg-input: var(--pbx-white);
   
   /* Text */
-  --pbx-text-primary: #FFFFFF;
-  --pbx-text-secondary: rgba(255,255,255,0.7);
-  --pbx-text-muted: rgba(255,255,255,0.5);
-  --pbx-text-dark: #1A1A1A;
-  --pbx-text-dark-secondary: #6B7280;
+  --pbx-text-primary: var(--pbx-ivory-50);
+  --pbx-text-secondary: var(--pbx-slate-300);
+  --pbx-text-muted: var(--pbx-slate-400);
+  --pbx-text-dark: var(--pbx-navy-950);
+  --pbx-text-dark-secondary: var(--pbx-slate-600);
   
   /* Borders */
-  --pbx-border: rgba(255,255,255,0.15);
-  --pbx-border-card: #E5E7EB;
+  --pbx-border: var(--pbx-border-dark);
+  --pbx-border-card: var(--pbx-border-light);
   
   /* Accent Colors */
-  --pbx-success: #10B981;
-  --pbx-warning: #F59E0B;
-  --pbx-error: #EF4444;
-  --pbx-info: #3B82F6;
+  --pbx-error: var(--pbx-danger);
   
   /* Spacing */
-  --pbx-radius-sm: 8px;
-  --pbx-radius-md: 12px;
-  --pbx-radius-lg: 16px;
-  --pbx-radius-xl: 24px;
+  --pbx-radius-sm: var(--radius-sm);
+  --pbx-radius-md: var(--radius-md);
+  --pbx-radius-lg: var(--radius-lg);
+  --pbx-radius-xl: var(--radius-xl);
 }
 
 /* Unified Shell - All Pages */
 .pbx-shell {
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--pbx-navy) 0%, var(--pbx-navy-dark) 100%);
+  background: linear-gradient(180deg, var(--pbx-navy-950) 0%, var(--pbx-navy-900) 100%);
   color: var(--pbx-text-primary);
 }
 
@@ -60,7 +58,7 @@
 }
 
 .pbx-card-elevated {
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Primary Button - Gold */
@@ -76,8 +74,7 @@
 }
 
 .pbx-btn-primary:hover {
-  background: var(--pbx-gold-dark);
-  transform: translateY(-1px);
+  background: var(--pbx-gold-400);
 }
 
 /* Secondary Button - Outlined */
@@ -113,7 +110,7 @@
 .pbx-input:focus {
   outline: none;
   border-color: var(--pbx-navy);
-  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1);
+  box-shadow: 0 0 0 3px rgba(214, 177, 74, 0.24);
 }
 
 .pbx-input::placeholder {
@@ -179,6 +176,18 @@
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pbx-live-dot {
+    animation: none;
+  }
+
+  .pbx-btn-primary,
+  .pbx-btn-secondary,
+  .pbx-input {
+    transition: none;
+  }
 }
 
 /* Hide emergent badge */
