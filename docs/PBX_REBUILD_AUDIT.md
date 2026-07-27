@@ -624,6 +624,15 @@ Existing Python tests:
 
 Frontend has a test script but no audited frontend test files.
 
+## Verification performed during this audit
+
+- `yarn build` in `frontend/`: passed after installing the existing frontend dependencies with `yarn install --frozen-lockfile`.
+- `python3 -m pytest tests backend/tests` without `REACT_APP_BACKEND_URL`: invalid run; several test files construct relative request URLs such as `/api/social/friends/request`, which `requests` cannot execute without a scheme/host.
+- `REACT_APP_BACKEND_URL=https://pbx-social.preview.emergentagent.com python3 -m pytest tests backend/tests`: completed with `19 passed, 261 failed, 8 skipped, 13 errors`. Representative failures were 404 responses from the configured remote target, not frontend compile failures.
+- Direct probes to the configured remote target returned 404 for `/api/health`, `/api/internal/lookup`, `/api/profiles/search/people?q=test`, and `/api/auth/register`.
+
+Interpretation: the current test suite requires a reachable FastAPI backend URL exposing the full `/api/*` surface. The audited preview URL currently does not expose that surface, which reinforces the deployment finding that production/static Netlify routing and FastAPI backend routing are split.
+
 ## Restoration priorities
 
 1. Keep FastAPI and ledger behavior intact.
