@@ -12,7 +12,7 @@
  * "body stream already read" errors.
  */
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 function getSessionFromStorage() {
   try {
@@ -63,7 +63,7 @@ async function safeParseJSON(res) {
  */
 export async function getLinkedBanks(sessionToken) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/linked`, {
+    const res = await fetch(apiUrl('/api/banks/linked'), {
       headers: baseHeaders(sessionToken),
     });
     
@@ -99,7 +99,7 @@ export async function getLinkedBanks(sessionToken) {
  */
 export async function linkBank(sessionToken, { public_token, institution, accounts }) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/link`, {
+    const res = await fetch(apiUrl('/api/banks/link'), {
       method: 'POST',
       headers: baseHeaders(sessionToken),
       body: JSON.stringify({
@@ -140,7 +140,7 @@ export async function linkBank(sessionToken, { public_token, institution, accoun
  */
 export async function unlinkBank(sessionToken, bankId) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/${bankId}`, {
+    const res = await fetch(apiUrl(`/api/banks/${bankId}`), {
       method: 'DELETE',
       headers: baseHeaders(sessionToken),
     });
@@ -174,7 +174,7 @@ export async function unlinkBank(sessionToken, bankId) {
  */
 export async function initiateAddMoney(sessionToken, { amount, bank_id }) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/add-money`, {
+    const res = await fetch(apiUrl('/api/banks/add-money'), {
       method: 'POST',
       headers: baseHeaders(sessionToken),
       body: JSON.stringify({ amount, bank_id }),
@@ -210,7 +210,7 @@ export async function initiateAddMoney(sessionToken, { amount, bank_id }) {
  */
 export async function initiateWithdrawal(sessionToken, { amount, bank_id }) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/withdraw`, {
+    const res = await fetch(apiUrl('/api/banks/withdraw'), {
       method: 'POST',
       headers: baseHeaders(sessionToken),
       body: JSON.stringify({ amount, bank_id }),
@@ -246,7 +246,7 @@ export async function initiateWithdrawal(sessionToken, { amount, bank_id }) {
  */
 export async function getTransferHistory(sessionToken, limit = 20) {
   try {
-    const res = await fetch(`${BACKEND_URL}/api/banks/transfers?limit=${limit}`, {
+    const res = await fetch(apiUrl(`/api/banks/transfers?limit=${limit}`), {
       headers: baseHeaders(sessionToken),
     });
     

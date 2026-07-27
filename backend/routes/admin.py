@@ -33,6 +33,7 @@ from utils.ledger import (
     get_ledger_entries_for_tx,
     verify_ledger_integrity
 )
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 logger = logging.getLogger(__name__)
@@ -44,7 +45,7 @@ def utc_now():
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from session token"""
-    return request.headers.get("X-Session-Token", "")
+    return get_request_user_id(request)
 
 
 # ============================================================

@@ -3,7 +3,7 @@
  * Handles Personal and Business profiles
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 function getSession() {
   try {
@@ -31,7 +31,7 @@ function getHeaders() {
  * Get all profiles for current user (personal + business)
  */
 export async function getMyProfiles() {
-  const res = await fetch(`${API_BASE}/api/profiles/me`, {
+  const res = await fetch(apiUrl('/api/profiles/me'), {
     headers: getHeaders(),
   });
   
@@ -46,7 +46,7 @@ export async function getMyProfiles() {
  * Get currently active profile
  */
 export async function getActiveProfile() {
-  const res = await fetch(`${API_BASE}/api/profiles/active`, {
+  const res = await fetch(apiUrl('/api/profiles/active'), {
     headers: getHeaders(),
   });
   
@@ -61,7 +61,7 @@ export async function getActiveProfile() {
  * Switch active profile
  */
 export async function switchProfile(profileId) {
-  const res = await fetch(`${API_BASE}/api/profiles/switch/${profileId}`, {
+  const res = await fetch(apiUrl(`/api/profiles/switch/${profileId}`), {
     method: 'POST',
     headers: getHeaders(),
   });
@@ -80,7 +80,7 @@ export async function switchProfile(profileId) {
  * Create or update personal profile
  */
 export async function updatePersonalProfile({ handle, displayName, avatarUrl }) {
-  const res = await fetch(`${API_BASE}/api/profiles/personal`, {
+  const res = await fetch(apiUrl('/api/profiles/personal'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -104,7 +104,7 @@ export async function updatePersonalProfile({ handle, displayName, avatarUrl }) 
  * Create a new business profile
  */
 export async function createBusinessProfile({ businessName, handle, category, logoUrl }) {
-  const res = await fetch(`${API_BASE}/api/profiles/business`, {
+  const res = await fetch(apiUrl('/api/profiles/business'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -129,7 +129,7 @@ export async function createBusinessProfile({ businessName, handle, category, lo
  * Update a profile
  */
 export async function updateProfile(profileId, updates) {
-  const res = await fetch(`${API_BASE}/api/profiles/${profileId}`, {
+  const res = await fetch(apiUrl(`/api/profiles/${profileId}`), {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify(updates),
@@ -149,7 +149,7 @@ export async function updateProfile(profileId, updates) {
  * Delete a business profile
  */
 export async function deleteBusinessProfile(profileId) {
-  const res = await fetch(`${API_BASE}/api/profiles/${profileId}`, {
+  const res = await fetch(apiUrl(`/api/profiles/${profileId}`), {
     method: 'DELETE',
     headers: getHeaders(),
   });
@@ -174,7 +174,7 @@ export async function deleteBusinessProfile(profileId) {
 export async function searchPeople(query) {
   if (!query || query.length < 2) return { profiles: [] };
   
-  const res = await fetch(`${API_BASE}/api/profiles/search/people?q=${encodeURIComponent(query)}`, {
+  const res = await fetch(apiUrl(`/api/profiles/search/people?q=${encodeURIComponent(query)}`), {
     headers: getHeaders(),
   });
   
@@ -191,7 +191,7 @@ export async function searchPeople(query) {
 export async function searchBusinesses(query) {
   if (!query || query.length < 2) return { profiles: [] };
   
-  const res = await fetch(`${API_BASE}/api/profiles/search/businesses?q=${encodeURIComponent(query)}`, {
+  const res = await fetch(apiUrl(`/api/profiles/search/businesses?q=${encodeURIComponent(query)}`), {
     headers: getHeaders(),
   });
   
@@ -206,7 +206,7 @@ export async function searchBusinesses(query) {
  * Get profile by ID
  */
 export async function getProfile(profileId) {
-  const res = await fetch(`${API_BASE}/api/profiles/${profileId}`, {
+  const res = await fetch(apiUrl(`/api/profiles/${profileId}`), {
     headers: getHeaders(),
   });
   

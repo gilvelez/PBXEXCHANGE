@@ -11,6 +11,7 @@ import os
 
 from database.connection import get_database
 from services.notifications import send_transfer_notifications
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/internal", tags=["internal"])
 logger = logging.getLogger(__name__)
@@ -65,8 +66,7 @@ class InternalTransferRequest(BaseModel):
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from session token"""
-    token = request.headers.get("X-Session-Token", "")
-    return token[:36] if token else None
+    return get_request_user_id(request)
 
 
 def utc_now():

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { auditLog } from '../lib/auditLog';
+import { apiFetch, apiUrl, parseApiResponse } from '../lib/api';
 
 const SessionContext = createContext(null);
 
@@ -8,25 +9,11 @@ const TOKEN_KEY = 'pbx_token';
 const SESSION_KEY = 'pbx_session';
 const ACTIVE_PROFILE_KEY = 'pbx_active_profile_id';
 
-// Get API base URL
-const getApiBase = () => {
-  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    return '';
-  }
-  return process.env.REACT_APP_BACKEND_URL || '';
-};
-const API_BASE = getApiBase();
-
 /**
  * Safe JSON parse from response - reads body ONCE to avoid "body disturbed" errors
  */
 async function safeParseResponse(res) {
-  const text = await res.text();
-  try {
-    return JSON.parse(text);
-  } catch {
-    return { error: text || 'Unknown error' };
-  }
+  return parseApiResponse(res);
 }
 
 /**
@@ -50,18 +37,7 @@ function clearAuthFromStorage() {
  * Authenticated fetch helper - adds BOTH Authorization and X-Session-Token headers
  */
 export async function authFetch(url, options = {}) {
-  const token = localStorage.getItem(TOKEN_KEY);
-  const headers = { 
-    ...(options.headers || {}), 
-    'Content-Type': 'application/json' 
-  };
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-    headers['X-Session-Token'] = token;
-  }
-  
-  const fullUrl = url.startsWith('http') ? url : `${API_BASE}${url}`;
-  return fetch(fullUrl, { ...options, headers });
+  return apiFetch(url, options);
 }
 
 export function SessionProvider({ children }) {
@@ -114,12 +90,8 @@ export function SessionProvider({ children }) {
     if (!token) return;
 
     try {
-      const res = await fetch(`${API_BASE}/api/auth/me`, {
+      const res = await apiFetch('/api/auth/me', {
         method: 'GET',
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'X-Session-Token': token,
-        },
       });
 
       const data = await safeParseResponse(res);
@@ -181,7 +153,7 @@ export function SessionProvider({ children }) {
    * LOGIN with email and password
    */
   const login = async (email, password) => {
-    const res = await fetch(`${API_BASE}/api/auth/login`, {
+    const res = await fetch(apiUrl('/api/auth/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -220,7 +192,7 @@ export function SessionProvider({ children }) {
    * REGISTER new user with email, password, and optional display name
    */
   const register = async (email, password, displayName) => {
-    const res = await fetch(`${API_BASE}/api/auth/register`, {
+    const res = await fetch(apiUrl('/api/auth/register'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, displayName }),

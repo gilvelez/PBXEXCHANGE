@@ -3,7 +3,7 @@
  * Handles PBX-to-PBX closed-loop transfers
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 // Get session token from localStorage
 const getSessionToken = () => {
@@ -31,7 +31,7 @@ const getHeaders = () => ({
  * @returns {Promise<{found: boolean, user?: object, message?: string}>}
  */
 export async function lookupPbxUser(identifier) {
-  const res = await fetch(`${API_BASE}/api/internal/lookup`, {
+  const res = await fetch(apiUrl('/api/internal/lookup'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ identifier }),
@@ -57,7 +57,7 @@ export async function lookupPbxUser(identifier) {
  * @returns {Promise<object>} Transfer result
  */
 export async function createInternalTransfer({ recipient_identifier, amount_usd, note }) {
-  const res = await fetch(`${API_BASE}/api/internal/transfer`, {
+  const res = await fetch(apiUrl('/api/internal/transfer'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ recipient_identifier, amount_usd, note }),
@@ -80,7 +80,7 @@ export async function createInternalTransfer({ recipient_identifier, amount_usd,
  * @returns {Promise<{transfers: array}>}
  */
 export async function getIncomingTransfers(limit = 10) {
-  const res = await fetch(`${API_BASE}/api/internal/incoming?limit=${limit}`, {
+  const res = await fetch(apiUrl(`/api/internal/incoming?limit=${limit}`), {
     headers: getHeaders(),
   });
   
@@ -101,7 +101,7 @@ export async function getIncomingTransfers(limit = 10) {
  * @returns {Promise<{success: boolean, message: string, invite_link: string}>}
  */
 export async function generateInvite(identifier) {
-  const res = await fetch(`${API_BASE}/api/internal/invite`, {
+  const res = await fetch(apiUrl('/api/internal/invite'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ identifier }),
@@ -148,7 +148,7 @@ export async function inviteToPbx(method, identifier) {
  * @returns {Promise<{users: array}>}
  */
 export async function searchPbxUsers(query) {
-  const res = await fetch(`${API_BASE}/api/users/search?q=${encodeURIComponent(query)}`, {
+  const res = await fetch(apiUrl(`/api/users/search?q=${encodeURIComponent(query)}`), {
     headers: getHeaders(),
   });
   

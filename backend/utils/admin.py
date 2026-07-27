@@ -17,6 +17,7 @@ from typing import Optional, List, Dict, Any
 from fastapi import HTTPException, Request
 import uuid
 import logging
+from utils.auth_context import get_request_user_id
 
 logger = logging.getLogger(__name__)
 
@@ -82,7 +83,7 @@ async def get_admin_user(db, request: Request) -> Optional[Dict[str, Any]]:
     Get admin user from request session.
     Returns user dict with admin info if valid admin, None otherwise.
     """
-    user_id = request.headers.get("X-Session-Token", "")
+    user_id = get_request_user_id(request)
     if not user_id:
         return None
     
