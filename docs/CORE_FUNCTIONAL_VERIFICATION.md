@@ -111,3 +111,21 @@ No WebSocket implementation was found or verified. Do not describe chat as realt
 4. Add Money, Withdraw, FX conversion, and external recipient payout remain mock/sandbox/stubbed unless provider credentials are configured.
 5. Netlify production routing remains split; FastAPI-only routes need a production API host/proxy before production can rely on same-origin `/api/*`.
 
+## Automated verification runs
+
+Frontend:
+
+- `yarn build`: Passing.
+
+Backend/local integration:
+
+- `REACT_APP_BACKEND_URL=http://localhost:8000 python3 -m pytest tests backend/tests`
+- Latest result after DB-name alignment and seed/index fixes: `268 passed, 31 failed, 2 skipped`.
+
+Notable remaining failure categories:
+
+- Several legacy tests use raw test tokens without funding wallets, while payment routes correctly reject insufficient funds.
+- Recipient wallet/bills/transfers/statement tests expose remaining schema and summary mismatches between `usd/php` and `usd_balance/php_balance` flows.
+- One frontend route smoke test requests `/sender/people/picker` from the FastAPI backend; the SPA route must be verified against the frontend dev server or deployed static frontend, not the API server.
+- Full browser refresh/session restoration remains pending.
+
