@@ -84,10 +84,43 @@ BUSINESS_OWNER = {
     "wallet": {"usd_balance": 500.00, "php_balance": 50000.00, "usd": 500.00, "php": 50000.00, "usdc": 0.0},
 }
 
+LEGACY_TEST_USERS = [
+    {
+        "user_id": "legacy-user-e8769e",
+        "email": "user.e8769e@example.com",
+        "phone": "+14155550999",
+        "display_name": "Test User",
+        "handle": "user_e8769e",
+        "country": "US",
+        "role": "sender",
+        "wallet": {"usd_balance": 600.00, "php_balance": 0.00, "usd": 600.00, "php": 0.00, "usdc": 0.0},
+    },
+    {
+        "user_id": "test-token-123-456-789-abc",
+        "email": "recipient.fixture@example.com",
+        "phone": "+14155550888",
+        "display_name": "Recipient Fixture",
+        "handle": "recipient_fixture",
+        "country": "PH",
+        "role": "recipient",
+        "wallet": {"usd_balance": 100.00, "php_balance": 1000.00, "usd": 100.00, "php": 1000.00, "usdc": 0.0},
+    },
+    {
+        "user_id": "sender-token-123-456-789",
+        "email": "sender.fixture@example.com",
+        "phone": "+14155550777",
+        "display_name": "Sender Fixture",
+        "handle": "sender_fixture",
+        "country": "US",
+        "role": "sender",
+        "wallet": {"usd_balance": 100.00, "php_balance": 1000.00, "usd": 100.00, "php": 1000.00, "usdc": 0.0},
+    },
+]
+
 
 async def upsert_users(db):
     password_hash = hash_password(DEV_PASSWORD)
-    for user in [*USERS, BUSINESS_OWNER]:
+    for user in [*USERS, BUSINESS_OWNER, *LEGACY_TEST_USERS]:
         await db.users.update_one(
             {"user_id": user["user_id"]},
             {
@@ -125,7 +158,7 @@ async def upsert_users(db):
 
 
 async def upsert_profiles(db):
-    for user in USERS:
+    for user in [*USERS, *LEGACY_TEST_USERS]:
         await db.profiles.update_one(
             {"profile_id": f"profile-{user['user_id']}"},
             {
@@ -342,7 +375,7 @@ async def upsert_activity_records(db):
 
 async def main():
     os.environ.setdefault("MONGODB_URI", "mongodb://localhost:27017")
-    os.environ.setdefault("DB_NAME", "pbx_exchange_dev")
+    os.environ.setdefault("DB_NAME", "pbx_database")
 
     db = await connect_to_mongo()
     await setup_ledger_indexes(db)

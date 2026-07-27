@@ -36,7 +36,7 @@ For basic local operation, ensure at least:
 
 ```bash
 MONGODB_URI=mongodb://localhost:27017
-DB_NAME=pbx_exchange_dev
+DB_NAME=pbx_database
 JWT_SECRET=replace-with-a-long-local-development-secret
 APP_URL=http://localhost:3000
 CORS_ORIGINS=http://localhost:3000
@@ -65,7 +65,7 @@ Canonical API convention: backend routes are served under `/api/...`.
 ```bash
 cd backend
 source .venv/bin/activate
-MONGODB_URI=mongodb://localhost:27017 DB_NAME=pbx_exchange_dev python scripts/seed_development.py
+MONGODB_URI=mongodb://localhost:27017 DB_NAME=pbx_database python scripts/seed_development.py
 ```
 
 ### 5. Start the frontend

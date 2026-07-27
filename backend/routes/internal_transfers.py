@@ -118,7 +118,7 @@ async def lookup_pbx_user(request: Request, data: UserLookupRequest):
                     {"phone": identifier}
                 ]
             },
-            {"_id": 0, "user_id": 1, "email": 1, "phone": 1, "full_name": 1, "role": 1}
+            {"_id": 0, "user_id": 1, "email": 1, "phone": 1, "full_name": 1, "display_name": 1, "role": 1}
         )
         
         if not user:
@@ -150,7 +150,7 @@ async def lookup_pbx_user(request: Request, data: UserLookupRequest):
             raise HTTPException(status_code=400, detail="Cannot send to yourself")
         
         # Build display name
-        display_name = user.get("full_name") or user.get("email", "").split("@")[0] or "PBX User"
+        display_name = user.get("full_name") or user.get("display_name") or user.get("email", "").split("@")[0] or "PBX User"
         
         return {
             "found": True,

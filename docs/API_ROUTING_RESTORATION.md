@@ -60,7 +60,7 @@ Command:
 ```bash
 cd backend
 MONGODB_URI=mongodb://localhost:27017 \
-DB_NAME=pbx_exchange_dev \
+DB_NAME=pbx_database \
 JWT_SECRET=dev-jwt-secret \
 APP_URL=http://localhost:3000 \
 uvicorn server:app --host 0.0.0.0 --port 8000
