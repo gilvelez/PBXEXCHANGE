@@ -383,7 +383,16 @@ async def main():
     await db.users.create_index("user_id", unique=True, name="dev_user_id_unique")
     await db.users.create_index("email", unique=True, sparse=True, name="dev_email_unique_sparse")
     await db.profiles.create_index("profile_id", unique=True, name="dev_profile_id_unique")
-    await db.profiles.create_index("handle", unique=True, sparse=True, name="dev_profile_handle_unique_sparse")
+    try:
+        await db.profiles.drop_index("dev_profile_handle_unique_sparse")
+    except Exception:
+        pass
+    await db.profiles.create_index(
+        "handle",
+        unique=True,
+        name="dev_profile_handle_unique_when_string",
+        partialFilterExpression={"handle": {"$type": "string"}},
+    )
 
     await upsert_users(db)
     await upsert_profiles(db)
