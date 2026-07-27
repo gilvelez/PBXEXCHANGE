@@ -17,7 +17,7 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: 24, fontFamily: 'system-ui, sans-serif' }}>
+        <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', background: '#F7F4ED', minHeight: '100vh' }}>
           <h2 style={{ color: '#dc2626', marginBottom: 16 }}>Something went wrong.</h2>
           <pre style={{ 
             whiteSpace: "pre-wrap", 
@@ -34,8 +34,8 @@ export class ErrorBoundary extends React.Component {
             style={{
               marginTop: 16,
               padding: '8px 16px',
-              background: '#0A2540',
-              color: 'white',
+              background: '#03112B',
+              color: '#F7F4ED',
               border: 'none',
               borderRadius: 8,
               cursor: 'pointer'

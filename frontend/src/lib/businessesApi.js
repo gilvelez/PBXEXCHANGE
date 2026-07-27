@@ -3,7 +3,7 @@
  * Business discovery, chat, and payments
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 function getSession() {
   try {
@@ -31,7 +31,7 @@ function getHeaders() {
  * Discover businesses (featured, recent, by category)
  */
 export async function discoverBusinesses(category = null, limit = 20) {
-  let url = `${API_BASE}/api/businesses/discover?limit=${limit}`;
+  let url = apiUrl(`/api/businesses/discover?limit=${limit}`);
   if (category) {
     url += `&category=${encodeURIComponent(category)}`;
   }
@@ -51,7 +51,7 @@ export async function discoverBusinesses(category = null, limit = 20) {
  * Get business categories
  */
 export async function getBusinessCategories() {
-  const res = await fetch(`${API_BASE}/api/businesses/categories`, {
+  const res = await fetch(apiUrl('/api/businesses/categories'), {
     headers: getHeaders(),
   });
   
@@ -66,7 +66,7 @@ export async function getBusinessCategories() {
  * Get businesses the user has paid before
  */
 export async function getBusinessesPaid() {
-  const res = await fetch(`${API_BASE}/api/businesses/paid`, {
+  const res = await fetch(apiUrl('/api/businesses/paid'), {
     headers: getHeaders(),
   });
   
@@ -81,7 +81,7 @@ export async function getBusinessesPaid() {
  * Get business profile details
  */
 export async function getBusinessProfile(profileId) {
-  const res = await fetch(`${API_BASE}/api/businesses/${profileId}`, {
+  const res = await fetch(apiUrl(`/api/businesses/${profileId}`), {
     headers: getHeaders(),
   });
   
@@ -100,7 +100,7 @@ export async function getBusinessProfile(profileId) {
  * Start or get chat with a business
  */
 export async function startBusinessChat(businessProfileId) {
-  const res = await fetch(`${API_BASE}/api/businesses/chat/${businessProfileId}`, {
+  const res = await fetch(apiUrl(`/api/businesses/chat/${businessProfileId}`), {
     method: 'POST',
     headers: getHeaders(),
   });
@@ -119,7 +119,7 @@ export async function startBusinessChat(businessProfileId) {
  * Pay a business
  */
 export async function payBusiness(businessProfileId, amountUsd, note = null) {
-  const res = await fetch(`${API_BASE}/api/businesses/pay`, {
+  const res = await fetch(apiUrl('/api/businesses/pay'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({

@@ -23,6 +23,7 @@ import uuid
 import logging
 
 from database.connection import get_database
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/banks", tags=["banks"])
 logger = logging.getLogger(__name__)
@@ -33,7 +34,7 @@ def utc_now():
 
 
 def get_user_id_from_headers(request: Request) -> str:
-    return request.headers.get("X-Session-Token", "")
+    return get_request_user_id(request)
 
 
 # ============================================================

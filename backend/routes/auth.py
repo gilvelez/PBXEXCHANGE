@@ -163,12 +163,16 @@ async def login(data: LoginRequest):
                 {
                     "$setOnInsert": {
                         "user_id": user_id,
+                        "userId": user_id,
                         "usd": 0,
                         "php": 0,
                         "usdc": 0,
+                        "usd_balance": 0,
+                        "php_balance": 0,
                         "created_at": datetime.utcnow(),
+                        "createdAt": datetime.utcnow(),
                     },
-                    "$set": {"updated_at": datetime.utcnow()}
+                    "$set": {"updated_at": datetime.utcnow(), "updatedAt": datetime.utcnow()}
                 },
                 upsert=True
             )
@@ -252,12 +256,17 @@ async def register(data: RegisterRequest):
     # Create wallet with demo amounts (same as Netlify functions)
     await wallets.insert_one({
         "user_id": user_id,
+        "userId": user_id,
         "usd": 500,
         "php": 28060,
         "usdc": 0,
+        "usd_balance": 500,
+        "php_balance": 28060,
         "demoSeeded": True,
         "created_at": datetime.utcnow(),
+        "createdAt": datetime.utcnow(),
         "updated_at": datetime.utcnow(),
+        "updatedAt": datetime.utcnow(),
     })
     
     # Create JWT token

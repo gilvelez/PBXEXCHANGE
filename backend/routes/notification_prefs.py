@@ -10,6 +10,7 @@ from services.notifications import (
     get_notification_preferences,
     set_notification_preferences
 )
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/notifications", tags=["notifications"])
 logger = logging.getLogger(__name__)
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from request headers"""
-    return request.headers.get("X-Session-Token", "")
+    return get_request_user_id(request)
 
 
 class NotificationPreferencesUpdate(BaseModel):

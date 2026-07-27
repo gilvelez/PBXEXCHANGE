@@ -1,93 +1,128 @@
-/**
- * PublicShell - Unified layout for public/marketing pages
- * Uses the same Navy + Gold theme as AppShell
- * Allows for "marketing hero" sections while keeping consistent tokens
- */
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { colors, tw } from "../lib/theme";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import BrandLogo from "../design-system/components/BrandLogo.jsx";
+
+const navItems = [
+  { to: "/how-it-works", label: "How It Works" },
+  { to: "/personal", label: "Personal" },
+  { to: "/business", label: "Business" },
+  { to: "/security", label: "Security" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/about", label: "About" },
+  { to: "/help", label: "Help" },
+];
 
 export default function PublicShell({ children }) {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
-  
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-neutral-950 text-gray-100">
-      {/* Sticky Navigation - Navy themed */}
-      {!isHome && (
-        <nav className={`${tw.shellBgSolid} border-b ${tw.borderOnDark} sticky top-0 z-50`}>
-          <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-2xl flex items-center justify-center bg-[#F6C94B]/20 border border-[#F6C94B]/40">
-                <span className="font-extrabold text-sm text-[#F6C94B]">PBX</span>
-              </div>
-              <span className={`font-bold text-lg ${tw.textGold}`}>PBX</span>
-            </Link>
-            
-            <div className="hidden md:flex items-center gap-6 text-sm">
-              <NavLink to="/pricing" label="Pricing" />
-              <NavLink to="/how-it-works" label="How It Works" />
-              <NavLink to="/business" label="Business" />
-              <Link
-                to="/welcome"
-                className={`rounded-xl ${tw.btnCta} px-5 py-2.5 transition`}
-                data-testid="nav-get-started"
+    <div className="min-h-screen bg-[#03112B] text-[#F7F4ED] font-sans-pbx">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#03112B]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+          <Link to="/" className="inline-flex items-center" aria-label="PBX Exchange home">
+            <BrandLogo variant="light" className="text-[17px]" showDescriptor />
+          </Link>
+
+          <nav className="hidden items-center gap-5 text-sm text-[#A9B5C8] lg:flex">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `transition hover:text-[#E0C16A] ${isActive ? "text-[#E0C16A]" : ""}`
+                }
               >
-                Get Started
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-3 lg:flex">
+            <Link to="/login" className="rounded-xl px-4 py-2 text-sm font-semibold text-[#F7F4ED] hover:bg-white/10">
+              Log In
+            </Link>
+            <Link
+              to="/register"
+              className="rounded-xl bg-[#D6B14A] px-5 py-2.5 text-sm font-bold text-[#03112B] transition hover:bg-[#E0C16A]"
+            >
+              Create Account
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-white/10 text-[#F7F4ED] lg:hidden"
+            aria-label="Open navigation"
+            aria-expanded={open}
+          >
+            <span className="text-xl">{open ? "×" : "☰"}</span>
+          </button>
+        </div>
+
+        {open && (
+          <div className="border-t border-white/10 px-4 pb-4 lg:hidden">
+            <nav className="grid gap-1 py-3">
+              {navItems.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-3 py-3 text-sm font-semibold text-[#DBE2ED] hover:bg-white/10"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="grid grid-cols-2 gap-3">
+              <Link to="/login" onClick={() => setOpen(false)} className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-semibold">
+                Log In
+              </Link>
+              <Link to="/register" onClick={() => setOpen(false)} className="rounded-xl bg-[#D6B14A] px-4 py-3 text-center text-sm font-bold text-[#03112B]">
+                Create Account
               </Link>
             </div>
-            
-            {/* Mobile menu button */}
-            <button className="md:hidden text-white/70 hover:text-white">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </div>
-        </nav>
-      )}
-      
-      {/* Page Content */}
-      <main>
-        {children}
-      </main>
-      
-      {/* Footer - Navy themed */}
-      <footer className={`${tw.shellBgSolid} py-10 border-t ${tw.borderOnDark}`}>
-        <div className="mx-auto max-w-7xl px-6 text-center text-xs text-white/50">
-          <div className="flex justify-center items-center gap-3 mb-4">
-            <div className="h-9 w-9 rounded-2xl bg-[#F6C94B]/20 border border-[#F6C94B]/40 flex items-center justify-center">
-              <span className="font-extrabold text-xs text-[#F6C94B]">PBX</span>
-            </div>
-            <div className="font-semibold text-white/70">PBX • Built in the United States</div>
+        )}
+      </header>
+
+      <main>{children}</main>
+
+      <footer className="border-t border-white/10 bg-[#061A3A]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1.2fr_2fr]">
+          <div>
+            <BrandLogo variant="light" className="text-[18px]" />
+            <p className="mt-5 max-w-md text-sm leading-6 text-[#A9B5C8]">
+              Social payments and cross-border wallets for Filipinos everywhere.
+              Demo and sandbox states are clearly labeled while integrations are connected.
+            </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 mb-4">
-            <Link to="/privacy" className="hover:text-[#F6C94B] transition">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-[#F6C94B] transition">Terms of Service</Link>
-            <Link to="/security" className="hover:text-[#F6C94B] transition">Security</Link>
+          <div className="grid gap-8 sm:grid-cols-3">
+            <FooterGroup title="Product" links={[["How It Works", "/how-it-works"], ["Personal", "/personal"], ["Business", "/business"], ["Pricing", "/pricing"]]} />
+            <FooterGroup title="Trust" links={[["Security", "/security"], ["Help", "/help"], ["Privacy", "/privacy"], ["Terms", "/terms"]]} />
+            <FooterGroup title="Account" links={[["Log In", "/login"], ["Create Account", "/register"], ["Onboarding", "/welcome"]]} />
           </div>
-          <p className="max-w-2xl mx-auto text-white/40">
-            PBX is a financial technology platform and does not provide banking or money transmission services directly. 
-            Services may be provided by licensed financial partners where required. 
-            Demo estimates shown; actual rates, fees, and availability vary.
-          </p>
-          <p className="mt-4">© {new Date().getFullYear()} Philippine Bayani Exchange (PBX). All rights reserved.</p>
+        </div>
+        <div className="border-t border-white/10 px-6 py-5 text-center text-xs text-[#8E9DB5]">
+          © {new Date().getFullYear()} PBX Exchange. PBX is a technology platform; mocked or sandboxed integrations are labeled in product.
         </div>
       </footer>
     </div>
   );
 }
 
-function NavLink({ to, label }) {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-  
+function FooterGroup({ title, links }) {
   return (
-    <Link 
-      to={to} 
-      className={`transition ${isActive ? 'text-[#F6C94B]' : 'text-white/70 hover:text-[#F6C94B]'}`}
-    >
-      {label}
-    </Link>
+    <div>
+      <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-[#E0C16A]">{title}</h2>
+      <div className="mt-4 grid gap-3">
+        {links.map(([label, to]) => (
+          <Link key={to} to={to} className="text-sm text-[#A9B5C8] transition hover:text-[#F7F4ED]">
+            {label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
+

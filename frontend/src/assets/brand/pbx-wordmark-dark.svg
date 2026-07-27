@@ -1,0 +1,11 @@
+<svg width="360" height="96" viewBox="0 0 360 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PBX Exchange wordmark, dark</title>
+  <desc id="desc">PBX Exchange wordmark with geometric exchange monogram.</desc>
+  <rect width="96" height="96" rx="22" fill="#03112B"/>
+  <path d="M24 22H48C57.9411 22 66 30.0589 66 40C66 49.9411 57.9411 58 48 58H37V75H24V22Z" fill="#F7F4ED"/>
+  <path d="M37 35V45H48C50.7614 45 53 42.7614 53 40C53 37.2386 50.7614 35 48 35H37Z" fill="#03112B"/>
+  <path d="M64 27L75 38L65 48L57 40L51 46L61 56L50 67L58 75L69 64L79 74L87 66L77 56L88 45L80 37L72 45L64 37L73 28L64 27Z" fill="#D6B14A"/>
+  <path d="M72 15L74.6 21.4L81 24L74.6 26.6L72 33L69.4 26.6L63 24L69.4 21.4L72 15Z" fill="#EAD58F"/>
+  <text x="118" y="43" fill="#03112B" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="800" letter-spacing="-0.8">PBX</text>
+  <text x="118" y="70" fill="#53647E" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="600" letter-spacing="-0.3">Exchange</text>
+</svg>

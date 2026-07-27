@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PBX Exchange app icon</title>
+  <desc id="desc">Compact PBX Exchange icon for app and favicon use.</desc>
+  <rect width="512" height="512" rx="112" fill="#03112B"/>
+  <path d="M132 120H256C306.81 120 348 161.19 348 212C348 262.81 306.81 304 256 304H200V392H132V120Z" fill="#F7F4ED"/>
+  <path d="M200 188V236H256C269.255 236 280 225.255 280 212C280 198.745 269.255 188 256 188H200Z" fill="#03112B"/>
+  <path d="M334 140L396 202L338 260L294 216L260 250L318 308L256 370L304 418L366 356L424 414L468 370L410 312L468 254L420 206L378 248L334 204L382 156L334 140Z" fill="#D6B14A"/>
+  <path d="M368 88L381.2 122.8L416 136L381.2 149.2L368 184L354.8 149.2L320 136L354.8 122.8L368 88Z" fill="#EAD58F"/>
+</svg>

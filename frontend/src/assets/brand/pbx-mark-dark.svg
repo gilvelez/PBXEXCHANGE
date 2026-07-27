@@ -1,0 +1,9 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PBX Exchange mark, dark</title>
+  <desc id="desc">A geometric PBX monogram with opposing wallet forms, an exchange pathway, and a subtle star.</desc>
+  <rect width="128" height="128" rx="28" fill="#03112B"/>
+  <path d="M33 30H64C76.7025 30 87 40.2975 87 53C87 65.7025 76.7025 76 64 76H50V98H33V30Z" fill="#F7F4ED"/>
+  <path d="M50 47V59H64C67.3137 59 70 56.3137 70 53C70 49.6863 67.3137 47 64 47H50Z" fill="#03112B"/>
+  <path d="M83.5 35L99 50.5L84.5 65L73.5 54L65 62.5L79.5 77L64 92.5L76 104.5L91.5 89L106 103.5L117 92.5L102.5 78L117 63.5L105 51.5L94.5 62L83.5 51L95.5 39L83.5 35Z" fill="#D6B14A"/>
+  <path d="M92 22L95.3 30.7L104 34L95.3 37.3L92 46L88.7 37.3L80 34L88.7 30.7L92 22Z" fill="#EAD58F"/>
+</svg>

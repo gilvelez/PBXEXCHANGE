@@ -3,7 +3,7 @@
  * Handles all API calls for the recipient dashboard
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 // Get session token from storage
 const getSessionToken = () => {
@@ -27,7 +27,7 @@ const getHeaders = () => ({
 
 // === WALLET API ===
 export async function getWalletBalances() {
-  const res = await fetch(`${API_BASE}/api/recipient/wallet`, {
+  const res = await fetch(apiUrl('/api/recipient/wallet'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch wallet');
@@ -35,7 +35,7 @@ export async function getWalletBalances() {
 }
 
 export async function fundWalletSimulation(amount) {
-  const res = await fetch(`${API_BASE}/api/recipient/wallet/fund`, {
+  const res = await fetch(apiUrl('/api/recipient/wallet/fund'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ amount }),
@@ -52,7 +52,7 @@ export async function fundWalletSimulation(amount) {
 }
 
 export async function allocateSubWallet(subWallet, amount) {
-  const res = await fetch(`${API_BASE}/api/recipient/wallet`, {
+  const res = await fetch(apiUrl('/api/recipient/wallet'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ action: 'allocate_sub_wallet', sub_wallet: subWallet, amount }),
@@ -63,7 +63,7 @@ export async function allocateSubWallet(subWallet, amount) {
 
 // === FX CONVERSION API ===
 export async function getFxQuote(amountUsd = 100) {
-  const res = await fetch(`${API_BASE}/api/recipient/convert?amount_usd=${amountUsd}`, {
+  const res = await fetch(apiUrl(`/api/recipient/convert?amount_usd=${amountUsd}`), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch FX quote');
@@ -71,7 +71,7 @@ export async function getFxQuote(amountUsd = 100) {
 }
 
 export async function lockFxRate(amountUsd, rate) {
-  const res = await fetch(`${API_BASE}/api/recipient/convert/lock`, {
+  const res = await fetch(apiUrl('/api/recipient/convert/lock'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ amount_usd: amountUsd, locked_rate: rate }),
@@ -81,7 +81,7 @@ export async function lockFxRate(amountUsd, rate) {
 }
 
 export async function convertCurrency(amountUsd, lockedRate, lockId) {
-  const res = await fetch(`${API_BASE}/api/recipient/convert/execute`, {
+  const res = await fetch(apiUrl('/api/recipient/convert/execute'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ 
@@ -96,7 +96,7 @@ export async function convertCurrency(amountUsd, lockedRate, lockId) {
 
 // === BILLS API ===
 export async function getBillers() {
-  const res = await fetch(`${API_BASE}/api/recipient/bills/billers`, {
+  const res = await fetch(apiUrl('/api/recipient/bills/billers'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch billers');
@@ -104,7 +104,7 @@ export async function getBillers() {
 }
 
 export async function getSavedBillers() {
-  const res = await fetch(`${API_BASE}/api/recipient/bills/saved`, {
+  const res = await fetch(apiUrl('/api/recipient/bills/saved'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch saved billers');
@@ -112,7 +112,7 @@ export async function getSavedBillers() {
 }
 
 export async function getBillPaymentHistory() {
-  const res = await fetch(`${API_BASE}/api/recipient/bills/history`, {
+  const res = await fetch(apiUrl('/api/recipient/bills/history'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch bill history');
@@ -120,7 +120,7 @@ export async function getBillPaymentHistory() {
 }
 
 export async function payBill(billerCode, accountNo, amount, saveBiller = false, nickname = '') {
-  const res = await fetch(`${API_BASE}/api/recipient/bills/pay`, {
+  const res = await fetch(apiUrl('/api/recipient/bills/pay'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ 
@@ -136,7 +136,7 @@ export async function payBill(billerCode, accountNo, amount, saveBiller = false,
 }
 
 export async function saveBiller(billerCode, accountNo, nickname) {
-  const res = await fetch(`${API_BASE}/api/recipient/bills/save`, {
+  const res = await fetch(apiUrl('/api/recipient/bills/save'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ biller_code: billerCode, account_no: accountNo, nickname }),
@@ -147,7 +147,7 @@ export async function saveBiller(billerCode, accountNo, nickname) {
 
 // === TRANSFERS API ===
 export async function getTransferMethods() {
-  const res = await fetch(`${API_BASE}/api/recipient/transfers/methods`, {
+  const res = await fetch(apiUrl('/api/recipient/transfers/methods'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch transfer methods');
@@ -155,7 +155,7 @@ export async function getTransferMethods() {
 }
 
 export async function getTransferHistory() {
-  const res = await fetch(`${API_BASE}/api/recipient/transfers/history`, {
+  const res = await fetch(apiUrl('/api/recipient/transfers/history'), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch transfer history');
@@ -163,7 +163,7 @@ export async function getTransferHistory() {
 }
 
 export async function createTransfer(method, amount, recipientAccount, recipientName, bankCode = null) {
-  const res = await fetch(`${API_BASE}/api/recipient/transfers/send`, {
+  const res = await fetch(apiUrl('/api/recipient/transfers/send'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ 
@@ -187,7 +187,7 @@ export async function getStatements(options = {}) {
   if (options.currency) params.set('currency', options.currency);
   if (options.limit) params.set('limit', options.limit);
 
-  const res = await fetch(`${API_BASE}/api/recipient/statements?${params}`, {
+  const res = await fetch(apiUrl(`/api/recipient/statements?${params}`), {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error('Failed to fetch statements');
@@ -195,7 +195,7 @@ export async function getStatements(options = {}) {
 }
 
 export async function exportStatementPdf(startDate, endDate) {
-  const res = await fetch(`${API_BASE}/api/recipient/statements/export`, {
+  const res = await fetch(apiUrl('/api/recipient/statements/export'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ start_date: startDate, end_date: endDate }),

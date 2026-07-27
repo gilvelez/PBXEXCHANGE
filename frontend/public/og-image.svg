@@ -1,55 +1,40 @@
-<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <!-- Gradient Background -->
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PBX Exchange</title>
+  <desc id="desc">Social payments and cross-border wallets for Filipinos everywhere.</desc>
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#ef4444;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#eab308;stop-opacity:1" />
-    </linearGradient>
-    
-    <!-- Overlay gradient for depth -->
-    <linearGradient id="overlayGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.1" />
-      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.4" />
+      <stop offset="0%" style="stop-color:#03112b;stop-opacity:1" />
+      <stop offset="58%" style="stop-color:#061a3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#102b57;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
-  <!-- Background -->
+
   <rect width="1200" height="630" fill="url(#bgGradient)"/>
-  <rect width="1200" height="630" fill="url(#overlayGradient)"/>
-  
-  <!-- Logo (Simple PBX square with gradient) -->
-  <g transform="translate(100, 150)">
-    <rect width="80" height="80" rx="12" fill="url(#bgGradient)" opacity="0.3"/>
-    <rect x="4" y="4" width="72" height="72" rx="10" fill="white"/>
-    <text x="40" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="800" text-anchor="middle" fill="url(#bgGradient)">
-      PBX
+  <circle cx="1010" cy="122" r="210" fill="#d6b14a" opacity="0.08"/>
+  <circle cx="1050" cy="530" r="180" fill="#f7f4ed" opacity="0.05"/>
+
+  <g transform="translate(100, 106)">
+    <rect width="108" height="108" rx="24" fill="#f7f4ed"/>
+    <path d="M27 25H54C65.1838 25 74 33.9543 74 45C74 56.0457 65.1838 65 54 65H42V84H27V25Z" fill="#03112b"/>
+    <path d="M42 39V51H54C57.3137 51 60 48.3137 60 45C60 41.6863 57.3137 39 54 39H42Z" fill="#f7f4ed"/>
+    <path d="M72 30L84 42L73 53L64 44L57 51L68 62L56 74L65 83L77 71L89 83L98 74L86 62L98 50L89 41L81 49L72 40L82 30L72 30Z" fill="#b7953f"/>
+    <path d="M82 14L85 21.5L93 24.5L85 27.5L82 35L79 27.5L71 24.5L79 21.5L82 14Z" fill="#d6b14a"/>
+    <text x="132" y="44" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#f7f4ed" letter-spacing="-1">PBX</text>
+    <text x="132" y="78" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="650" fill="#a9b5c8" letter-spacing="-0.5">Exchange</text>
+  </g>
+
+  <g transform="translate(100, 282)">
+    <text x="0" y="0" font-family="Playfair Display, Georgia, serif" font-size="62" font-weight="700" fill="#f7f4ed" letter-spacing="-1.3">
+      Money moves better
+    </text>
+    <text x="0" y="74" font-family="Playfair Display, Georgia, serif" font-size="62" font-weight="700" fill="#f7f4ed" letter-spacing="-1.3">
+      when people are connected.
+    </text>
+    <text x="0" y="138" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="500" fill="#dbe2ed">
+      Social payments and cross-border wallets for Filipinos everywhere.
+    </text>
+    <text x="0" y="183" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="500" fill="#e0c16a">
+      Send, receive, convert, and connect through one trusted financial network.
     </text>
   </g>
-  
-  <!-- Main Text -->
-  <g transform="translate(100, 280)">
-    <!-- Title -->
-    <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="54" font-weight="800" fill="white" letter-spacing="-1">
-      Philippine Bayani Exchange
-    </text>
-    
-    <!-- Tagline -->
-    <text x="0" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="600" fill="white" opacity="0.95">
-      For the Heroes Who Build Home from Afar
-    </text>
-    
-    <!-- Subtitle -->
-    <text x="0" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="white" opacity="0.85">
-      Every transfer carries more than money—
-    </text>
-    <text x="0" y="165" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="white" opacity="0.85">
-      it carries love, dreams, and family.
-    </text>
-  </g>
-  
-  <!-- Decorative Elements -->
-  <circle cx="1050" cy="150" r="100" fill="white" opacity="0.1"/>
-  <circle cx="1000" cy="500" r="60" fill="white" opacity="0.08"/>
-  <circle cx="150" cy="550" r="40" fill="white" opacity="0.1"/>
 </svg>

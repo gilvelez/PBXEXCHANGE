@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useSession } from "../contexts/SessionContext";
 import ProfileSwitcher from "./ProfileSwitcher";
+import BrandLogo from "../design-system/components/BrandLogo.jsx";
 
 // Navigation items for sender dashboard - 7 tabs (SAME FOR BOTH PROFILES)
 // Bills is now a first-class destination in the sidebar
@@ -107,29 +108,32 @@ export default function SenderShell() {
   const handle = activeProfile?.handle;
 
   return (
-    <div className="min-h-screen bg-[#F6F8FB] flex flex-col">
+    <div className="min-h-screen bg-[#F7F4ED] flex flex-col">
       {/* Top Header - Shows Active Profile Indicator */}
-      <header className="bg-[#0A2540] border-b border-[#F6C94B]/20 sticky top-0 z-50">
+      <header className="bg-[#03112B] border-b border-[#D6B14A]/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Left: Logo + Active Profile Indicator */}
           <div className="flex items-center gap-3">
             {/* Mobile menu button */}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 text-white/70 hover:text-[#F6C94B]"
+              className="lg:hidden p-2 text-white/70 hover:text-[#D6B14A]"
               data-testid="sender-mobile-menu-btn"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            
+            <NavLink to="/sender/dashboard" className="hidden md:flex">
+              <BrandLogo variant="light" className="text-[15px]" markClassName="h-8 w-8" />
+            </NavLink>
+
             {/* Active Profile Indicator - Left side */}
             <div className="flex items-center gap-2">
               <div className={`h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold ${
                 isBusinessProfile 
                   ? 'bg-purple-500 text-white' 
-                  : 'bg-[#F6C94B]/20 text-[#F6C94B] border border-[#F6C94B]/40'
+                  : 'bg-[#D6B14A]/20 text-[#D6B14A] border border-[#D6B14A]/40'
               }`}>
                 {displayName?.[0]?.toUpperCase() || "?"}
               </div>
@@ -141,7 +145,7 @@ export default function SenderShell() {
                   <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${
                     isBusinessProfile 
                       ? 'bg-purple-500/30 text-purple-200' 
-                      : 'bg-[#F6C94B]/20 text-[#F6C94B]'
+                      : 'bg-[#D6B14A]/20 text-[#D6B14A]'
                   }`}>
                     {isBusinessProfile ? "Business" : "Personal"}
                   </span>
@@ -157,7 +161,7 @@ export default function SenderShell() {
             
             <button
               onClick={handleLogout}
-              className="text-sm text-white/70 hover:text-[#F6C94B] transition hidden sm:block"
+              className="text-sm text-white/70 hover:text-[#D6B14A] transition hidden sm:block"
               data-testid="sender-logout-btn"
             >
               Sign out
@@ -168,7 +172,7 @@ export default function SenderShell() {
 
       <div className="flex flex-1">
         {/* Sidebar - Desktop */}
-        <aside className="hidden lg:flex flex-col w-60 bg-[#0A2540] border-r border-[#F6C94B]/20">
+        <aside className="hidden lg:flex flex-col w-60 bg-[#03112B] border-r border-[#D6B14A]/20">
           <nav className="flex-1 p-4">
             <ul className="space-y-1">
               {navItems.map(({ to, label, icon }) => (
@@ -178,7 +182,7 @@ export default function SenderShell() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive 
-                          ? "bg-[#F6C94B]/20 text-[#F6C94B]" 
+                          ? "bg-[#D6B14A]/20 text-[#D6B14A]" 
                           : "text-white/70 hover:bg-white/5 hover:text-white"
                       }`
                     }
@@ -193,10 +197,10 @@ export default function SenderShell() {
           </nav>
           
           {/* Sidebar footer */}
-          <div className="p-4 border-t border-[#F6C94B]/20">
+          <div className="p-4 border-t border-[#D6B14A]/20">
             <NavLink
               to="/"
-              className="flex items-center gap-2 text-sm text-white/50 hover:text-[#F6C94B] transition"
+              className="flex items-center gap-2 text-sm text-white/50 hover:text-[#D6B14A] transition"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -215,7 +219,7 @@ export default function SenderShell() {
         )}
 
         {/* Mobile Sidebar */}
-        <aside className={`lg:hidden fixed top-14 left-0 bottom-0 w-64 bg-[#0A2540] border-r border-[#F6C94B]/20 z-50 transform transition-transform ${
+        <aside className={`lg:hidden fixed top-14 left-0 bottom-0 w-64 bg-[#03112B] border-r border-[#D6B14A]/20 z-50 transform transition-transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <nav className="p-4">
@@ -228,7 +232,7 @@ export default function SenderShell() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive 
-                          ? "bg-[#F6C94B]/20 text-[#F6C94B]" 
+                          ? "bg-[#D6B14A]/20 text-[#D6B14A]" 
                           : "text-white/70 hover:bg-white/5 hover:text-white"
                       }`
                     }
@@ -242,10 +246,10 @@ export default function SenderShell() {
           </nav>
           
           {/* Mobile logout */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#F6C94B]/20">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#D6B14A]/20">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-2 px-3 py-2 text-white/70 hover:text-[#F6C94B] transition"
+              className="w-full flex items-center gap-2 px-3 py-2 text-white/70 hover:text-[#D6B14A] transition"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -271,7 +275,7 @@ export default function SenderShell() {
       </div>
 
       {/* Mobile Bottom Navigation - 5 tabs (Bills accessible via Home) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0A2540] border-t border-[#F6C94B]/20 z-40">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#03112B] border-t border-[#D6B14A]/20 z-40">
         <div className="flex justify-around py-2">
           {mobileNavItems.map(({ to, label, icon }) => (
             <NavLink
@@ -279,7 +283,7 @@ export default function SenderShell() {
               to={to}
               className={({ isActive }) =>
                 `flex flex-col items-center py-1 px-2 min-w-0 ${
-                  isActive ? "text-[#F6C94B]" : "text-white/60"
+                  isActive ? "text-[#D6B14A]" : "text-white/60"
                 }`
               }
             >
@@ -289,7 +293,7 @@ export default function SenderShell() {
           ))}
         </div>
         {/* Safe area for iOS */}
-        <div className="h-safe-area-inset-bottom bg-[#0A2540]" />
+        <div className="h-safe-area-inset-bottom bg-[#03112B]" />
       </nav>
     </div>
   );

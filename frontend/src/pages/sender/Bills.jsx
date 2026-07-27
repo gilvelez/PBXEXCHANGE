@@ -89,7 +89,7 @@ export default function Bills() {
     setPaymentLoading(true);
     try {
       // Simulated payment - would call actual API
-      const res = await fetch(`${API_BASE}/api/bills/pay`, {
+      const res = await fetch(`${API_BASE}/api/recipient/bills/pay`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

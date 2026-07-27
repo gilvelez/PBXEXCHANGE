@@ -5,7 +5,7 @@
  * Note: User only sees USD amounts - USDC is a hidden implementation detail
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 function getSessionToken() {
   try {
@@ -31,7 +31,7 @@ function getHeaders() {
  */
 export async function getCircleStatus() {
   try {
-    const res = await fetch(`${API_BASE}/api/circle/status`, {
+    const res = await fetch(apiUrl('/api/circle/status'), {
       headers: getHeaders(),
     });
     return await res.json();
@@ -45,7 +45,7 @@ export async function getCircleStatus() {
  * Create Circle wallet for user (called automatically on first add money)
  */
 export async function createCircleWallet(blockchain = 'MATIC-AMOY') {
-  const res = await fetch(`${API_BASE}/api/circle/create-wallet`, {
+  const res = await fetch(apiUrl('/api/circle/create-wallet'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ blockchain }),
@@ -76,7 +76,7 @@ export async function addMoney(amount) {
     throw new Error('Maximum $10,000 per transaction');
   }
   
-  const res = await fetch(`${API_BASE}/api/circle/mint-usdc`, {
+  const res = await fetch(apiUrl('/api/circle/mint-usdc'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ amount }),
@@ -104,7 +104,7 @@ export async function addMoney(amount) {
  * @returns {Promise<object>} Balance info
  */
 export async function getWalletBalance() {
-  const res = await fetch(`${API_BASE}/api/circle/balance`, {
+  const res = await fetch(apiUrl('/api/circle/balance'), {
     headers: getHeaders(),
   });
   

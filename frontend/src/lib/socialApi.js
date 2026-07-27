@@ -5,7 +5,7 @@
  * Phase 0: All requests include X-Active-Profile header
  */
 
-const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+import { apiUrl } from './api';
 
 function getSession() {
   try {
@@ -33,7 +33,7 @@ function getHeaders() {
  * Send a friend request to another user
  */
 export async function sendFriendRequest(addresseeUserId) {
-  const res = await fetch(`${API_BASE}/api/social/friends/request`, {
+  const res = await fetch(apiUrl('/api/social/friends/request'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ addressee_user_id: addresseeUserId }),
@@ -53,7 +53,7 @@ export async function sendFriendRequest(addresseeUserId) {
  * Handle friend request action (accept/decline/block/unblock/unfriend)
  */
 export async function handleFriendAction(friendshipId, action) {
-  const res = await fetch(`${API_BASE}/api/social/friends/action`, {
+  const res = await fetch(apiUrl('/api/social/friends/action'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ friendship_id: friendshipId, action }),
@@ -73,7 +73,7 @@ export async function handleFriendAction(friendshipId, action) {
  * Get friends list, incoming requests, and outgoing requests
  */
 export async function getFriendsList() {
-  const res = await fetch(`${API_BASE}/api/social/friends/list`, {
+  const res = await fetch(apiUrl('/api/social/friends/list'), {
     headers: getHeaders(),
   });
   
@@ -89,7 +89,7 @@ export async function getFriendsList() {
  * Returns: none | outgoing_pending | incoming_pending | friends | blocked
  */
 export async function getFriendshipStatus(otherUserId) {
-  const res = await fetch(`${API_BASE}/api/social/friends/status/${otherUserId}`, {
+  const res = await fetch(apiUrl(`/api/social/friends/status/${otherUserId}`), {
     headers: getHeaders(),
   });
   
@@ -108,7 +108,7 @@ export async function getFriendshipStatus(otherUserId) {
  * Get all conversations for current user
  */
 export async function getConversations() {
-  const res = await fetch(`${API_BASE}/api/social/conversations`, {
+  const res = await fetch(apiUrl('/api/social/conversations'), {
     headers: getHeaders(),
   });
   
@@ -123,7 +123,7 @@ export async function getConversations() {
  * Get or create conversation with a specific user
  */
 export async function getConversation(otherUserId) {
-  const res = await fetch(`${API_BASE}/api/social/conversations/${otherUserId}`, {
+  const res = await fetch(apiUrl(`/api/social/conversations/${otherUserId}`), {
     headers: getHeaders(),
   });
   
@@ -145,7 +145,7 @@ export async function getConversation(otherUserId) {
  * Get messages for a conversation
  */
 export async function getMessages(conversationId, limit = 50, before = null) {
-  let url = `${API_BASE}/api/social/messages/${conversationId}?limit=${limit}`;
+  let url = apiUrl(`/api/social/messages/${conversationId}?limit=${limit}`);
   if (before) {
     url += `&before=${encodeURIComponent(before)}`;
   }
@@ -165,7 +165,7 @@ export async function getMessages(conversationId, limit = 50, before = null) {
  * Send a text message
  */
 export async function sendMessage(conversationId, text) {
-  const res = await fetch(`${API_BASE}/api/social/messages/send`, {
+  const res = await fetch(apiUrl('/api/social/messages/send'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -189,7 +189,7 @@ export async function sendMessage(conversationId, text) {
  * Send PBX payment inside chat
  */
 export async function sendPaymentInChat(recipientUserId, amountUsd, note = null) {
-  const res = await fetch(`${API_BASE}/api/social/payments/send-in-chat`, {
+  const res = await fetch(apiUrl('/api/social/payments/send-in-chat'), {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({
@@ -206,5 +206,55 @@ export async function sendPaymentInChat(recipientUserId, amountUsd, note = null)
     throw new Error(data.detail || 'Failed to send payment');
   }
   
+  return data;
+}
+
+/**
+ * Request PBX payment inside chat
+ */
+export async function requestPaymentInChat(payerUserId, amountUsd, note = null) {
+  const res = await fetch(apiUrl('/api/social/payments/request-in-chat'), {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({
+      payer_user_id: payerUserId,
+      amount_usd: amountUsd,
+      note,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(data.detail || 'Failed to request payment');
+  }
+
+  return data;
+}
+
+/**
+ * Accept, decline, or cancel a PBX payment request
+ */
+export async function handlePaymentRequest(requestId, action, idempotencyKey = null) {
+  const headers = getHeaders();
+  if (idempotencyKey) {
+    headers['Idempotency-Key'] = idempotencyKey;
+  }
+
+  const res = await fetch(apiUrl('/api/social/payments/requests/action'), {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      request_id: requestId,
+      action,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(data.detail || `Failed to ${action} payment request`);
+  }
+
   return data;
 }

@@ -1,0 +1,6 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PBX Exchange mark, one color</title>
+  <desc id="desc">One-color PBX Exchange monogram.</desc>
+  <rect width="128" height="128" rx="28" fill="#03112B"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M33 30H64C76.7025 30 87 40.2975 87 53C87 60.6768 83.2394 67.4753 77.4618 71.6527L91.5 85.691L106 71.191L117 82.191L102.5 96.691L117 111.191L106 122.191L91.5 107.691L76 123.191L64 111.191L79.5 95.691L65 81.191L50 96.191V98H33V30ZM50 47V59H64C67.3137 59 70 56.3137 70 53C70 49.6863 67.3137 47 64 47H50ZM92 6L95.3 14.7L104 18L95.3 21.3L92 30L88.7 21.3L80 18L88.7 14.7L92 6Z" fill="#F7F4ED"/>
+</svg>

@@ -11,6 +11,7 @@ import uuid
 
 from database.connection import get_database
 from routes.profiles import ProfileType, get_or_create_personal_profile
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/businesses", tags=["businesses"])
 logger = logging.getLogger(__name__)
@@ -22,8 +23,7 @@ def utc_now():
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from session token"""
-    token = request.headers.get("X-Session-Token", "")
-    return token[:36] if token else None
+    return get_request_user_id(request)
 
 
 def get_active_profile_from_headers(request: Request) -> Optional[str]:

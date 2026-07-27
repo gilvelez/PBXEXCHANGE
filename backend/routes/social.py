@@ -15,6 +15,7 @@ import uuid
 
 from database.connection import get_database
 from services.notifications import notify_pbx_to_pbx_recipient
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/social", tags=["social"])
 logger = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ def utc_now():
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from session token"""
-    return request.headers.get("X-Session-Token", "")
+    return get_request_user_id(request)
 
 
 async def get_or_create_personal_profile(db, user_id: str) -> dict:
@@ -100,6 +101,17 @@ class PaymentInChat(BaseModel):
     recipient_user_id: str
     amount_usd: float = Field(..., gt=0, le=5000)
     note: Optional[str] = None
+
+
+class PaymentRequestCreate(BaseModel):
+    payer_user_id: str
+    amount_usd: float = Field(..., gt=0, le=5000)
+    note: Optional[str] = None
+
+
+class PaymentRequestAction(BaseModel):
+    request_id: str
+    action: Literal["accept", "decline", "cancel"]
 
 
 class QuickAddRequest(BaseModel):
@@ -891,6 +903,7 @@ async def get_messages(request: Request, conversation_id: str, limit: int = 50, 
             "type": m.get("type"),
             "text": m.get("text"),
             "payment": m.get("payment"),
+            "payment_request": m.get("payment_request"),
             "created_at": m.get("created_at").isoformat() if m.get("created_at") else None
         })
     
@@ -949,6 +962,193 @@ async def send_message(request: Request, data: MessageSend):
         "success": True,
         "message_id": message_id,
         "created_at": now.isoformat()
+    }
+
+
+@router.post("/payments/request-in-chat")
+async def create_payment_request_in_chat(request: Request, data: PaymentRequestCreate):
+    """Create a payment request bubble in an existing or new friend conversation."""
+    requester_user_id = get_user_id_from_headers(request)
+    if not requester_user_id:
+        raise HTTPException(status_code=401, detail="No session token provided")
+
+    if requester_user_id == data.payer_user_id:
+        raise HTTPException(status_code=400, detail="Cannot request money from yourself")
+
+    db = get_database()
+    friendships = db.friendships
+    conversations = db.conversations
+    messages_coll = db.messages
+    payment_requests = db.payment_requests
+    users = db.users
+
+    friendship = await friendships.find_one({
+        "$or": [
+            {"requester_user_id": requester_user_id, "addressee_user_id": data.payer_user_id},
+            {"requester_user_id": data.payer_user_id, "addressee_user_id": requester_user_id}
+        ],
+        "status": FriendshipStatus.ACCEPTED
+    })
+    if not friendship:
+        raise HTTPException(status_code=403, detail="Must be friends to request PBX")
+
+    conversation = await conversations.find_one({
+        "$or": [
+            {"user1_id": requester_user_id, "user2_id": data.payer_user_id},
+            {"user1_id": data.payer_user_id, "user2_id": requester_user_id}
+        ]
+    })
+    if not conversation:
+        conversation_id = await create_conversation(db, requester_user_id, data.payer_user_id)
+    else:
+        conversation_id = conversation.get("conversation_id")
+
+    now = utc_now()
+    request_id = f"preq_{uuid.uuid4().hex[:12]}"
+    message_id = f"msg_{uuid.uuid4().hex[:12]}"
+    requester = await users.find_one({"user_id": requester_user_id}, {"_id": 0})
+    requester_name = requester.get("display_name") or requester.get("email", "").split("@")[0] if requester else "Someone"
+
+    request_doc = {
+        "request_id": request_id,
+        "conversation_id": conversation_id,
+        "requester_user_id": requester_user_id,
+        "payer_user_id": data.payer_user_id,
+        "amount_usd": data.amount_usd,
+        "currency": "USD",
+        "note": data.note,
+        "status": "pending",
+        "message_id": message_id,
+        "created_at": now,
+        "updated_at": now,
+    }
+    await payment_requests.insert_one(request_doc)
+
+    await messages_coll.insert_one({
+        "message_id": message_id,
+        "conversation_id": conversation_id,
+        "sender_user_id": requester_user_id,
+        "type": "payment_request",
+        "text": data.note,
+        "payment_request": {
+            "request_id": request_id,
+            "amount_usd": data.amount_usd,
+            "status": "pending",
+            "requester_user_id": requester_user_id,
+            "payer_user_id": data.payer_user_id,
+            "requester_name": requester_name,
+        },
+        "created_at": now,
+    })
+    await conversations.update_one(
+        {"conversation_id": conversation_id},
+        {"$set": {"last_message_at": now}}
+    )
+
+    return {
+        "success": True,
+        "request_id": request_id,
+        "message_id": message_id,
+        "conversation_id": conversation_id,
+        "amount_usd": data.amount_usd,
+        "status": "pending",
+        "created_at": now.isoformat(),
+    }
+
+
+@router.post("/payments/requests/action")
+async def handle_payment_request_action(request: Request, data: PaymentRequestAction):
+    """Accept, decline, or cancel a pending payment request."""
+    from utils.ledger import get_idempotency_key, create_transfer_atomic
+
+    user_id = get_user_id_from_headers(request)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="No session token provided")
+
+    db = get_database()
+    payment_requests = db.payment_requests
+    messages_coll = db.messages
+    conversations = db.conversations
+
+    payment_request = await payment_requests.find_one({"request_id": data.request_id})
+    if not payment_request:
+        raise HTTPException(status_code=404, detail="Payment request not found")
+
+    requester_user_id = payment_request.get("requester_user_id")
+    payer_user_id = payment_request.get("payer_user_id")
+
+    if data.action == "accept" and user_id != payer_user_id:
+        raise HTTPException(status_code=403, detail="Only the requested payer can accept")
+    if data.action == "decline" and user_id != payer_user_id:
+        raise HTTPException(status_code=403, detail="Only the requested payer can decline")
+    if data.action == "cancel" and user_id != requester_user_id:
+        raise HTTPException(status_code=403, detail="Only the requester can cancel")
+
+    if payment_request.get("status") != "pending":
+        raise HTTPException(status_code=409, detail="Payment request is no longer pending")
+
+    now = utc_now()
+
+    if data.action == "accept":
+        idempotency_key = get_idempotency_key(request) or f"payment-request:{data.request_id}"
+        ledger_tx_result, is_duplicate = await create_transfer_atomic(
+            db=db,
+            from_user_id=payer_user_id,
+            to_user_id=requester_user_id,
+            amount=float(payment_request.get("amount_usd", 0)),
+            currency="USD",
+            note=payment_request.get("note"),
+            idempotency_key=idempotency_key,
+            transfer_type="payment_request_accept",
+            metadata={
+                "conversation_id": payment_request.get("conversation_id"),
+                "payment_request_id": data.request_id,
+                "source": "payment_request",
+            }
+        )
+        tx_id = ledger_tx_result.get("tx_id")
+        new_status = "completed"
+        update_fields = {
+            "status": new_status,
+            "accepted_at": now,
+            "tx_id": tx_id,
+            "updated_at": now,
+        }
+    else:
+        tx_id = None
+        new_status = "declined" if data.action == "decline" else "cancelled"
+        update_fields = {
+            "status": new_status,
+            "updated_at": now,
+        }
+        is_duplicate = False
+
+    await payment_requests.update_one(
+        {"request_id": data.request_id},
+        {"$set": update_fields}
+    )
+    await messages_coll.update_one(
+        {"message_id": payment_request.get("message_id")},
+        {
+            "$set": {
+                "payment_request.status": new_status,
+                "payment_request.tx_id": tx_id,
+                "payment_request.updated_at": now,
+            }
+        }
+    )
+    await conversations.update_one(
+        {"conversation_id": payment_request.get("conversation_id")},
+        {"$set": {"last_message_at": now}}
+    )
+
+    return {
+        "success": True,
+        "request_id": data.request_id,
+        "status": new_status,
+        "tx_id": tx_id,
+        "is_duplicate": is_duplicate,
+        "updated_at": now.isoformat(),
     }
 
 

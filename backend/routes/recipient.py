@@ -17,6 +17,7 @@ import os
 import httpx
 
 from database.connection import get_database
+from utils.auth_context import get_request_user_id
 
 router = APIRouter(prefix="/api/recipient", tags=["recipient"])
 logger = logging.getLogger(__name__)
@@ -183,10 +184,7 @@ def get_mock_mid_market_rate():
 
 def get_user_id_from_headers(request: Request) -> str:
     """Extract user ID from session token"""
-    token = request.headers.get("X-Session-Token", "")
-    if not token:
-        return None
-    return token[:36]
+    return get_request_user_id(request)
 
 
 def utc_now():

@@ -34,7 +34,7 @@ html {
 body {
     margin: 0;
     font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
         sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -48,8 +48,9 @@ code {
 
 /* PBX Custom UI Tweaks */
 /* Ensure focus outlines for accessibility */
-button:focus-visible, a:focus-visible { 
-    outline: 2px solid rgba(0,0,0,0.35); 
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid #d6b14a;
     outline-offset: 2px; 
 }
 
@@ -62,57 +63,57 @@ button:focus-visible, a:focus-visible {
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
+        --background: 44 38% 95%;
+        --foreground: 220 87% 9%;
+        --card: 44 38% 95%;
+        --card-foreground: 220 87% 9%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
+        --popover-foreground: 220 87% 9%;
+        --primary: 220 87% 9%;
+        --primary-foreground: 44 38% 95%;
+        --secondary: 218 70% 20%;
+        --secondary-foreground: 44 38% 95%;
+        --muted: 39 30% 92%;
+        --muted-foreground: 216 21% 41%;
+        --accent: 43 62% 56%;
+        --accent-foreground: 220 87% 9%;
+        --destructive: 356 45% 57%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 87% 9% / 0.12;
+        --input: 220 87% 9% / 0.12;
+        --ring: 43 62% 56%;
+        --chart-1: 43 62% 56%;
+        --chart-2: 160 53% 40%;
+        --chart-3: 213 48% 53%;
+        --chart-4: 37 66% 53%;
+        --chart-5: 356 45% 57%;
+        --radius: 0.75rem;
     }
     .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+        --background: 220 87% 9%;
+        --foreground: 44 38% 95%;
+        --card: 218 70% 13%;
+        --card-foreground: 44 38% 95%;
+        --popover: 218 70% 13%;
+        --popover-foreground: 44 38% 95%;
+        --primary: 43 62% 56%;
+        --primary-foreground: 220 87% 9%;
+        --secondary: 218 69% 20%;
+        --secondary-foreground: 44 38% 95%;
+        --muted: 218 63% 16%;
+        --muted-foreground: 218 21% 72%;
+        --accent: 43 62% 56%;
+        --accent-foreground: 220 87% 9%;
+        --destructive: 356 45% 57%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 100% / 0.10;
+        --input: 0 0% 100% / 0.12;
+        --ring: 43 62% 56%;
+        --chart-1: 43 62% 56%;
+        --chart-2: 160 53% 40%;
+        --chart-3: 213 48% 53%;
+        --chart-4: 37 66% 53%;
+        --chart-5: 356 45% 57%;
     }
 }
 
