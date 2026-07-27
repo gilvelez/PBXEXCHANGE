@@ -97,7 +97,6 @@ export function SessionProvider({ children }) {
       const data = await safeParseResponse(res);
 
       if (!res.ok) {
-        console.log('Session invalid, clearing...');
         clearAuthFromStorage();
         setSession({
           exists: false,

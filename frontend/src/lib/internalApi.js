@@ -128,10 +128,7 @@ export async function inviteToPbx(method, identifier) {
   // First generate the invite message
   const inviteData = await generateInvite(identifier);
   
-  // In production, this would trigger actual SMS/email
-  // For now, log and return success (mock mode)
-  console.log(`Invite via ${method}:`, inviteData.message);
-  
+  // In production, this would trigger actual SMS/email.
   return {
     success: true,
     method,
